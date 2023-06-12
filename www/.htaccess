@@ -1,0 +1,26 @@
+RewriteEngine On
+RewriteBase /
+#html/login.html to /login
+RewriteRule ^login$ html/login.html [NC,L]
+#html/error.html to /register
+RewriteRule ^error$ html/error.html [NC,L]
+#php/alta_User.php to /alta
+RewriteRule ^alta$ php/alta_User.php [NC,L]
+#php/baja_User.php to /baja
+RewriteRule ^baja$ php/baja_User.php [NC,L]
+#php/Crear_tabla.php to /nuevaTarea
+RewriteRule ^nuevaTarea$ php/Crear_tarea.php [NC,L]
+#php/Modificar_T_User.php to /modificar
+RewriteRule ^modificar$ php/Modificar_T_User.php [NC,L]
+#php/tareas.php to /tareas
+RewriteRule ^tareas$ php/tareas.php [NC,L]
+#php/tareas_admin.php to /tareas_admin
+RewriteRule ^tareas_admin$ php/tareas_admin.php [NC,L]
+#html/help.html to /help
+RewriteRule ^help$ html/help.html [NC,L]
+#php/cliente.php to /cliente
+RewriteRule ^cliente$ php/cliente.php [NC,L]
+#php/Crear_T_cliente.php to /TareaCliente
+RewriteRule ^TareaCliente$ php/Crear_T_cliente.php [NC,L]
+#php/Modificar_Tarea_cliente.php to /ModificarCliente
+RewriteRule ^ModificarCliente$ php/Modificar_Tarea_cliente.php [NC,L]
