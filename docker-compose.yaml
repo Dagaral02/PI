@@ -1,0 +1,83 @@
+version: "3.1"
+services:
+
+    db:
+        image: mysql
+        ports: 
+            - "3306:3306"
+        command: --default-authentication-plugin=mysql_native_password
+        environment:
+            MYSQL_DATABASE: DB
+            MYSQL_ROOT_USER: #Usuario
+            MYSQL_PASSWORD: #Contraseña
+            MYSQL_ROOT_PASSWORD: #Contraseña
+        volumes:
+            - ./dump:/docker-entrypoint-initdb.d
+            - ./conf:/etc/mysql/conf.d
+            - ./mysql:/var/lib/mysql
+        networks:
+            - PI_network
+
+    www:
+        build: .
+        ports: 
+            - "970:80"
+        volumes:
+            - ./www:/var/www/html
+        links:
+            - db
+        networks:
+            - PI_network
+
+    phpmyadmin_users:
+        image: phpmyadmin/phpmyadmin
+        links:
+            - db:db
+        ports:
+            - "8400:80"
+        environment:
+            MYSQL_USER: root
+            MYSQL_PASSWORD: #Contraseña
+            MYSQL_ROOT_PASSWORD: #Contraseña
+        networks:
+            - PI_network
+
+    
+    uptime-kuma:
+        image: louislam/uptime-kuma:1
+        container_name: uptime-kuma
+        volumes:
+            - ./uptime-kuma-data:/app/data
+            - /var/run/docker.sock:/var/run/docker.sock
+        ports:
+            - '3001:3001'
+        restart: always
+        networks:
+            - PI_network
+
+    proxy:
+        image: 'jc21/nginx-proxy-manager:latest'
+        restart: unless-stopped
+        ports:
+            - '80:80'
+            - '81:81'
+            - '443:443'
+        volumes:
+            - ./data:/data
+            - ./letsencrypt:/etc/letsencrypt
+        networks:
+            - PI_network
+
+
+    portainer:
+        image: portainer/portainer:latest
+        volumes:
+            - ./data:/data
+            - /var/run/docker.sock:/var/run/docker.sock
+        ports:
+            - '9000:9000'
+        networks:
+            - PI_network
+
+volumes:
+    persistent:
