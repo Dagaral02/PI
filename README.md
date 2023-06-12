@@ -69,3 +69,5 @@ Producción:
 
               LISTEN 0 50 127.0.0.1:8200 0.0.0.0:* users:(("mono-sgen",pid=8173,fd=9))
              
+ Configurar el archibo de configuración y colocar esta linea para que pueda salir al esterior
+ duplicati-server --webservice-interface=any --webservice-port=8200 --webservice-allowed-hostnames=*
